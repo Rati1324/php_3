@@ -10,10 +10,4 @@ function display_word($in_english, $in_georgian, $id) { ?>
 <?php } 
 
 function display_insert(){ ?>
-	<form action="" method="post">    
-		<input type="text" name="in_english">
-		<input type="text" name="in_georgian">
-		<button name="insert">Insert</button>
-	</form>
-	<a href="?select=" name="select">View all words</a>
-<?php } ?>
+	<?php } ?>

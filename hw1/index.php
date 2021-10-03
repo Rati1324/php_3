@@ -5,10 +5,12 @@
     <title>Document</title>
 </head>
 <body>
-    <?php
+		<a href='?page=display_words'>Display words</a>
+		<a href='?page=insert'>Insert</a>
+		<a href='?page=test'>Take a test</a>    
+<?php
         include('classes.php');
         include('db.php');
-        include('functions.php');
         $db = new Database("localhost", "rati", "123456");
 		
 		function set_variables(){
@@ -26,28 +28,27 @@
 			}
 		}
 
-        if (isset($_POST['insert'])){
-			$w->insert();
-        }
+		if (isset($_GET['page'])){
+			switch($_GET['page']){
+				case 'display_words':
+					$words = Word::get_all_words($db);
+					include('all_words.php');
+					break;
+				case 'insert':
+					include('insert_word.html');
+					break;
+				case 'test':
+					include('test.php');
+					break;
+			}
+		}
 
-        if (isset($_POST['update'])){
+		else if (isset($_POST['update'])){
 			$w->update();
         }
 
-		if (isset($_POST['remove'])){
-			$w->remove();
-		}
 
-        if (isset($_GET['select'])){
-			$words = Word::get_all_words($db);
-            foreach ($words as $word){
-                display_word($word->get_english(), $word->get_georgian(), $word->get_id());
-            }
-            echo "<a href='?'>Insert a new word</a>";
-        }
-		else{
-			display_insert();
-		}		
+        		
 ?>
 </body>
 </html>

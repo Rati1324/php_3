@@ -32,8 +32,4 @@
             return $res;
         }
 
-		public function update(){
-			$sql = "UPDATE word SET in_english = $this->in_english, in_georgian = $this->in_georgian";
-			echo $sql;
-		}
 }

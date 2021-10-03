@@ -38,7 +38,9 @@ class Word{
 	}
 
 	public function update(){
+		echo "asdsa";
 		$sql = "UPDATE word SET in_english = '$this->in_english', in_georgian = '$this->in_georgian' WHERE id = $this->id";
 		$this->db->execute($sql);
 	}
 }
+
