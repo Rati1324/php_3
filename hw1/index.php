@@ -9,7 +9,7 @@
 		<a href='?page=insert'>Insert</a>
 		<a href='?page=test'>Take a test</a>    
 <?php
-        include('classes.php');
+        include('word.php');
         include('db.php');
         $db = new Database("localhost", "rati", "123456");
 		
@@ -32,13 +32,13 @@
 			switch($_GET['page']){
 				case 'display_words':
 					$words = Word::get_all_words($db);
-					include('all_words.php');
+					include('display_words.php');
 					break;
 				case 'insert':
 					include('insert_word.html');
 					break;
 				case 'test':
-					include('test.php');
+					include('take_test.php');
 					break;
 			}
 		}
@@ -47,6 +47,7 @@
 			$w->update();
         }
 
+			
 
         		
 ?>

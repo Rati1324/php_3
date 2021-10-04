@@ -1,20 +1,26 @@
 <?php
 
 	$words = Word::get_all_words($db);
-
-	if (isset($_POST['remove'])){
+	function find_word($words, $id){
 		foreach ($words as $k => $v){
 			if ($v->get_id() == $_POST['id']){
-				$word = $v;
-				unset($words[$k]);
+				return $k;
 			}
 		}
+	}
+
+	if (isset($_POST['remove'])){
+		$word_index = find_word($words, $_POST['id']);
+		$word = $words[$word_index];
 		$word->remove();
+		unset($words[$word_index]);
 	}
 
 	else if (isset($_POST['update'])){
-		$word = new Word($_POST['id'], $_POST['in_english'], $_POST['in_georgian'], $db);
-		echo "fuck";
+		$word_index = find_word($words, $_POST['id']);
+		$word = $words[$word_index];
+		$word->set_english($_POST['in_english']);
+		$word->set_georgian($_POST['in_georgian']);
 		$word->update();
 	}
 	
