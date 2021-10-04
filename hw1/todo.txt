@@ -1,5 +1,0 @@
-ToDo:
-	Database stuff [ ]
-	Write a question generator [ ]
-	Write a test generator [ ]
-	Display the test [ ]

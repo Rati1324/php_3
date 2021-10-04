@@ -25,9 +25,10 @@
             }
         }
 
+		// remember to pass the query when you want all of them
         public function select($query){
             // Maybe add prepared statements later
-            $stmt = $this->conn->query("SELECT * FROM word");
+            $stmt = $this->conn->query($query);
             $res = $stmt->fetchAll();
             return $res;
         }
