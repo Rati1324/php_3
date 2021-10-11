@@ -9,13 +9,14 @@
             $this->username = $username;
             try {
                 $conn = new PDO("mysql:host=$servername;dbname=dictionary", $username, $password);
-                //$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->conn = $conn;
             }
             catch (PDOException $e){
                 echo "Connection failed: " . $e->getMessage();
             }
         }
+		//Maybe useless??
         public function execute($query){
             try{
                 $this->conn->exec($query);        
@@ -32,5 +33,7 @@
             $res = $stmt->fetchAll();
             return $res;
         }
+
+
 
 }
