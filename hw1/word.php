@@ -6,7 +6,7 @@ class Word{
 	private $conn;
 	private $db;
 	
-    public function __construct($id=2, $in_english, $in_georgian, $db){
+    public function __construct($id=null, $in_english, $in_georgian, $db){
 		$this->id = $id;
         $this->in_english = $in_english;
         $this->in_georgian = $in_georgian;
@@ -29,9 +29,8 @@ class Word{
 	}
 
     public function insert(){
-		$sql = "INSERT INTO word VALUES(:in_english, :in_georgian)";
-		$stmt = $this->db->conn->prepare($sql); //Compilation
-		//echo $db->conn->lastInsertId();
+		$sql = "INSERT INTO word VALUES(NULL, :in_english, :in_georgian)";
+		$stmt = $this->db->get_conn()->prepare($sql); //Compilation
 		$stmt->bindParam(':in_english', $this->in_english);
 		$stmt->bindParam(':in_georgian', $this->in_georgian);
 		$stmt->execute();

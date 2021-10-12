@@ -8,14 +8,13 @@ class Test
 	protected $score;
 	protected $questions = [];
 	
-	public function __construct($id=null, $start_date, $end_date=null, $duration=null, $score=null, $num_of_q, $db){
+	public function __construct($id=null, $start_date, $end_date=null, $duration=null, $score=null, $db){
 		$this->id = $id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
 		$this->duration = $duration;
 		$this->score = $score;
 		$this->db = $db;
-		$this->generate_questions($num_of_q);
 	}
 
 	public function get_id(){ return $this->id; }
@@ -29,29 +28,34 @@ class Test
 			$answer = $words[rand(0, count($words)-1)];
 			$question = "Find the english word for " . $answer['in_georgian'];
 			$options = array_map(function ($x) {return $x['in_english'];}, $words);
-			$q = new Question(question: $question, options: $options, answer: $answer['in_georgian']);
-
+			$last_id = $this->db->last_id('question') + 1;
+			$q = new Question($last_id, $question, $options, $answer['in_georgian'], $this->db);
+			//$q->insert();
 			$this->questions[] = $q;
 		}
 	}
 
 	public function insert(){
-		// sql = "INSERT INTO test VALUES("
+		$sql = "INSERT INTO test VALUES(NULL, '$this->start_date', NULL, NULL, NULL)";
+		//echo $sql;
+		$this->db->execute($sql);
 	}
 }
 
-class Question extends Test
+class Question 
 {
-	private $id;
+	protected $id;
 	private $question;
 	private $options;
 	private $answer;
+	private $db;
 
-	public function __construct($id=null, $question, $options, $answer){
-		parent::__construct($id, $db);
+	public function __construct($id=null, $question, $options, $answer, $db){
+		$this->id = $id;
 		$this->question = $question;
 		$this->options = $options;
 		$this->answer = $answer;
+		$this->db = $db;
 	}
 	
 	public function get_id(){ return $this->id; }
@@ -63,4 +67,13 @@ class Question extends Test
 		return $this->answer = $answer;
 	}
 
+	public function insert(){
+		$option1 = $this->options[0];
+		$option2 = $this->options[1];
+		$option3 = $this->options[2];
+		$option4 = $this->options[3];
+		$sql = "INSERT INTO question VALUES($this->id, '$this->question', '$option1', '$option2', '$option3', '$option4', '$this->answer')";
+		$this->db->execute($sql);
+	}
 }
+

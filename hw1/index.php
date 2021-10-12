@@ -7,12 +7,11 @@
 <body>
 		<a href='?page=display_words'>Display words</a>
 		<a href='?page=insert'>Insert</a>
-		<a href='?page=test'>Take a test</a>    
+		<a href='take_test.php'>Take a test</a>    
 <?php
         include('word.php');
         include('db.php');
         $db = new Database("localhost", "rati", "123456");
-		
 		function set_variables(){
 			$in_georgian = $_POST['in_georgian'];
 			$in_english = $_POST['in_english'];
@@ -35,7 +34,7 @@
 					include('display_words.php');
 					break;
 				case 'insert':
-					include('insert_word.html');
+					include('insert_word.php');
 					break;
 				case 'test':
 					include('take_test.php');

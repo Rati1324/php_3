@@ -16,6 +16,7 @@
                 echo "Connection failed: " . $e->getMessage();
             }
         }
+        public function get_conn(){ return $this->conn; }
 		//Maybe useless??
         public function execute($query){
             try{
@@ -33,7 +34,11 @@
             $res = $stmt->fetchAll();
             return $res;
         }
-
-
-
+		
+		public function last_id($table){
+			$sql = "SELECT MAX(id) FROM $table";
+			$stmt = $this->conn->query($sql);
+			$data = $stmt->fetchAll();
+			return $data[0][0];
+		}
 }

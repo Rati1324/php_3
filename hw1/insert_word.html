@@ -1,13 +1,7 @@
-<?php 
-	if (isset($_POST['insert'])){
-		$w = new Word(in_english: $_POST['in_english'], in_georgian: $_POST['in_georgian'], db: $db);
-		$w->insert();
-	} 
-?>
-<form method='post'>
-	<input type='text' name=in_english>
-	<input type='text' name=in_georgian>
-	<button name="insert">Insert</button>
+<form>
+	<input id="in_english" type='text' name=in_english>
+	<input id="in_georgian" type='text' name=in_georgian>
+	<button onclick=send_data() name="insert">Insert</button>
 </form>
 
 
