@@ -18,16 +18,12 @@ class db
 	}
 	
 	public function select($id=[], $table) {
+		$query = "SELECT * FROM $table";
 		if (count($id) == 0)
-			$stmt = $this->conn->prepare("SELECT * FROM $table");
+			$stmt = $this->conn->prepare($query);
 		else {
-			$query = "SELECT ";
-			$comma = ", ";
-			for ($i = 0; $i < count($id); $i++) {
-				if ($i == count($id)) $comma = " ";
-				$query .= $id[$i] . $comma;
-			}
-			$query .= "FROM $table";
+			$ids = implode(",", $id);
+			$query .= " WHERE id in (" . $ids . ")";
 			$stmt = $this->conn->prepare($query);
 		}
 		$stmt->execute();
@@ -68,6 +64,7 @@ class db
 		foreach ($data as $index => $d) {
 			$stmt->bindParam(":$fields[$index]", $data[$index]);
 		}
+		echo $query;
 		$stmt->execute();
 	}	
 }
