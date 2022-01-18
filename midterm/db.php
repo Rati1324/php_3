@@ -26,14 +26,22 @@ class db
 		return $data;
 	}
 
+	// do this without prepared statements
 	public function select($key="", $col="") {
-		if (empty($key) && empty($col)) {
+		if (empty($key)) {
 			$query = "SELECT * FROM user";
+			$data = $this->conn->query($query);
+			$data = $data->fetchAll();
 		}
 		else {
 			$query = "SELECT * FROM user WHERE $col=$key";
+			$stmt = $this->conn->prepare($query);
+			$stmt->bindParam(':col', $col);
+			$stmt->bindParam(':key', $key);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$data = $stmt->fetchAll();
 		}
-		$data = $this->conn->query($query);
 		return $data;
 	}
 
